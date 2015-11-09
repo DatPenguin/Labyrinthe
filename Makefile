@@ -1,9 +1,9 @@
 
 NAME = labyrinthe
 CC = gcc
-CFLAGS = -W -Wall -Wextra -Iinclude# -ansi -pedantic
-LDFLAGS =
-SRC = projet_final.c init.c
+CFLAGS = -W -Wall -Wextra -Iinclude
+LDFLAGS = -L.
+SRC = $(shell find -type f -name "*.c")
 OBJ = $(SRC:.c=.o)
 RM = rm -rf
 

@@ -2,6 +2,14 @@
 #include <stdlib.h>
 #include "header.h"
 
+#define N 20
+#define M 20
+
+extern int piece;
+extern int vies;
+extern int tab[2];
+extern int C[N][M];
+
 int intro()
 {
     int digit = 0;
@@ -33,7 +41,6 @@ void def_tableau()
 {
     int i = 0;
 
-    // C[xtmp][ytmp] = 1;//attribution des valeurs 1, 8, 6 equivalent respectivement au joueur, piege et piece.
     tab[0] = 0;
     tab[1] = 0;
     C[tab[0]][tab[1]] = 120;
@@ -104,7 +111,7 @@ void def_tableau()
         C[i][6] = 8;
     }
     for(i = 11; i <= 15; i++)
-        C[11][i] = 8;   //J'suis pas sûr de l'emplacement du i et du 15
+        C[11][i] = 8;
     for(i = 12; i <= 18; i++)
         C[i][15] = 8;
     C[1][18] = 0;

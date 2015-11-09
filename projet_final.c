@@ -3,23 +3,13 @@
 #include <unistd.h>
 #include "header.h"
 
-#define N 20
 #define M 20
-
-#define ROUGE "\033[5;1;31m"
-#define NORMAL "\033[0m"
-#define GRIS "\033[1;1;37m"
-#define BLEU "\033[1;1;34m"
-#define JAUNE "\033[1;1;33m"
-#define VERT "\\033[1;32m"
+#define N 20
 
 int piece = 0;
 int vies = 3;
 int tab[2];
 int C[N][M]  =  {{0}};
-
-
-
 
 void affiche_tableau() //affichage de la carte (tableau)
 {
@@ -280,62 +270,62 @@ void game_over()
     }
 }
 
-#include <termios.h>
+/* #include <termios.h> */
 
-static struct termios   save_termios;
-static int              term_saved;
+/* static struct termios   save_termios; */
+/* static int              term_saved; */
 
-int tty_raw(int fd) {       // RAW! mode
-    struct termios  buf;
+/* int tty_raw(int fd) {       // RAW! mode */
+/*     struct termios  buf; */
 
-    if (tcgetattr(fd, &save_termios) < 0) // get the original state
-        return -1;
+/*     if (tcgetattr(fd, &save_termios) < 0) // get the original state */
+/*         return -1; */
 
-    buf = save_termios;
+/*     buf = save_termios; */
 
-    buf.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
-                    // echo off, canonical mode off, extended input
-    //                       processing off, signal chars off
+/*     buf.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG); */
+/*                     // echo off, canonical mode off, extended input */
+/*     //                       processing off, signal chars off */
 
-    buf.c_iflag &= ~(BRKINT | ICRNL | ISTRIP | IXON);
-                    // No SIGINT on BREAK, CR-toNL off, input parity
-    //                    check off, don't strip the 8th bit on input,
-    //                 ouput flow control off
+/*     buf.c_iflag &= ~(BRKINT | ICRNL | ISTRIP | IXON); */
+/*                     // No SIGINT on BREAK, CR-toNL off, input parity */
+/*     //                    check off, don't strip the 8th bit on input, */
+/*     //                 ouput flow control off */
 
-    //buf.c_cflag &= ~(CSIZE | PARENB);
-                    // clear size bits, parity checking off
+/*     //buf.c_cflag &= ~(CSIZE | PARENB); */
+/*                     // clear size bits, parity checking off */
 
-    //    buf.c_cflag |= CS8;
-                    // set 8 bits/char
+/*     //    buf.c_cflag |= CS8; */
+/*                     // set 8 bits/char */
 
-    //    buf.c_oflag &= ~(OPOST);
-                    //output processing off
+/*     //    buf.c_oflag &= ~(OPOST); */
+/*                     //output processing off */
 
-    buf.c_cc[VMIN] = 1;  // 1 byte at a time
-    buf.c_cc[VTIME] = 0; // no timer on input
+/*     buf.c_cc[VMIN] = 1;  // 1 byte at a time */
+/*     buf.c_cc[VTIME] = 0; // no timer on input */
 
-    if (tcsetattr(fd, TCSAFLUSH, &buf) < 0)
-        return -1;
+/*     if (tcsetattr(fd, TCSAFLUSH, &buf) < 0) */
+/*         return -1; */
 
-    term_saved = 1;
+/*     term_saved = 1; */
 
-    return 0;
-}
+/*     return 0; */
+/* } */
 
 
-int tty_reset(int fd) { // set it to normal!
-    if (term_saved)
-        if (tcsetattr(fd, TCSAFLUSH, &save_termios) < 0)
-            return -1;
+/* int tty_reset(int fd) { // set it to normal! */
+/*     if (term_saved) */
+/*         if (tcsetattr(fd, TCSAFLUSH, &save_termios) < 0) */
+/*             return -1; */
 
-    return 0;
-}
+/*     return 0; */
+/* } */
 
 int main()
 {
     if (intro() != 0)
     {
-      tty_raw(1);
+      /* tty_raw(1); */
 
         def_tableau();
         affiche_tableau();
@@ -349,7 +339,7 @@ int main()
 	  }
     }
 
-    tty_reset(1);
+    /* tty_reset(1); */
 
     game_over();
     game_win();
