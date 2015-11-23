@@ -24,7 +24,7 @@ void affiche_tableau() //affichage de la carte (tableau)
 	    printf("%sx ", BLEU);
 	    break;
 	  case 8:
-	    printf("%s8 ", ROUGE);
+	    printf("%s8 ", LIGHT_GRIS);
 	    break;
 	  case 6:
 	    printf("%s6 ", JAUNE);
@@ -32,8 +32,11 @@ void affiche_tableau() //affichage de la carte (tableau)
 	  case 5:
 	    printf("%s5 ", BLEU);
 	    break;
+	  case 42:
+	    printf("%s9 ", VERT);
+	    break;
 	  default:
-	    printf("%s0 ", GRIS);
+	    printf("%s0 ", CYAN);
 	    break;
 	  }
         }

@@ -27,6 +27,5 @@ re: fclean all
 
 hello:
 	@printf "Compilation du $(NAME) en cours...\n"
-	@sleep 1
 
 .PHONY: all re clean fclean
