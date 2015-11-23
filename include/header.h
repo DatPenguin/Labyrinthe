@@ -9,9 +9,13 @@
  #define VERT "\\033[1;32m"
 
  #define N 20
-
+ #define M 20
 
  int intro();
  void def_tableau();
+ void affiche_tableau();
+ int deplace_personnage();
+ void game_win();
+ void game_over();
 
 #endif

@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include "header.h"
 
-#define N 20
-#define M 20
-
 extern int piece;
 extern int vies;
 extern int tab[2];
@@ -116,4 +113,5 @@ void def_tableau()
         C[i][15] = 8;
     C[1][18] = 0;
     C[1][5] = 0;
+    C[11][17] = 0;
 }

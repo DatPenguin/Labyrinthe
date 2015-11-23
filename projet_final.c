@@ -3,9 +3,6 @@
 #include <unistd.h>
 #include "header.h"
 
-#define M 20
-#define N 20
-
 int piece = 0;
 int vies = 3;
 int tab[2];
@@ -31,6 +28,9 @@ void affiche_tableau() //affichage de la carte (tableau)
 	    break;
 	  case 6:
 	    printf("%s6 ", JAUNE);
+	    break;
+	  case 5:
+	    printf("%s5 ", BLEU);
 	    break;
 	  default:
 	    printf("%s0 ", GRIS);
