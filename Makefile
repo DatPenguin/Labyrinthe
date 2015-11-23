@@ -28,4 +28,19 @@ re: fclean all
 hello:
 	@printf "Compilation du $(NAME) en cours...\n"
 
+credits:
+	@printf "\t##################\n"
+	@sleep 0.1
+	@printf "\t#   Labyrinthe   #\n"
+	@sleep 0.1
+	@printf "\t# Projet L1 MIPI #\n"
+	@sleep 0.1
+	@printf "\t# Matteo STAIANO #\n"
+	@sleep 0.1
+	@printf "\t#Alexandre ORVAIN#\n"
+	@sleep 0.1
+	@printf "\t#   2015 /2016   #\n"
+	@sleep 0.1
+	@printf "\t##################\n"
+
 .PHONY: all re clean fclean
