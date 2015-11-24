@@ -21,10 +21,13 @@
  #define N 20
  #define M 20
 
+ #define DEBUG 1
+
  int intro();
  void def_tableau();
- void affiche_tableau();
+ void affiche_tableau(int);
  int deplace_personnage();
+ void print_status();
  void game_win();
  void game_over();
 

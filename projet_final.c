@@ -2,18 +2,23 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "header.h"
+#include <signal.h>
+#include <termios.h>
 
 int piece = 0;
 int vies = 3;
 int tab[2];
 int C[N][M]  =  {{0}};
 
-void affiche_tableau() //affichage de la carte (tableau)
+void affiche_tableau(int status) //affichage de la carte (tableau)
 {
   int i, j;
 
   system("clear");	//Effacement de l'écran avant nouvel affichage
-  printf("\t vous avez ramasse %d piece,  %d vies restante \n\tVous etes en (%d;%d)\n\t\t", piece, vies, tab[0], tab[1]);
+  if (status == 0)
+    print_status();
+  if(DEBUG)
+    printf("\n%sDEBUG: Vous etes en (%d,%d)%s\n", LIGHT_VERT, tab[0], tab[1], NORMAL);
 
   for (i  =  0; i  <  N; i++)
     {
@@ -24,33 +29,33 @@ void affiche_tableau() //affichage de la carte (tableau)
 	    printf("%sx ", BLEU);
 	    break;
 	  case 8:
-	    printf("%s8 ", LIGHT_GRIS);
+	    printf("%s8 ", LIGHT_ROUGE);
 	    break;
 	  case 6:
 	    printf("%s6 ", JAUNE);
 	    break;
 	  case 5:
-	    printf("%s5 ", BLEU);
+	    printf("%s5 ", LIGHT_VERT);
 	    break;
 	  case 42:
 	    printf("%s9 ", VERT);
 	    break;
 	  default:
-	    printf("%s0 ", CYAN);
+	    printf("%s0 ", LIGHT_GRIS);
 	    break;
 	  }
         }
-      printf("\n\t\t");
+      printf("\n");
     }
   putchar('\n');
 
 }
 
-int deplace_personnage()
+int deplace_personnage(int a)
 {
-    int a;
-    printf("Veuillez saisir une direction:\n");
-    scanf("%d", &a);
+  //int a;
+  //printf("%sVeuillez saisir une direction:\n", NORMAL);
+    //scanf("%d", &a);
 
 /////////////////////pour le haut//////////////////////
 
@@ -132,8 +137,6 @@ int deplace_personnage()
         {
             tab[1]--;
             C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
-            printf(" vous avez perdu %d vies \n", vies);//debug
-            printf(" vous avez ramasse %d piece \n", piece);
         }
     }
 
@@ -175,9 +178,6 @@ int deplace_personnage()
         {
             tab[1]++;
             C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
-
-            printf(" vous avez perdu %d vies \n", vies); //debug
-            printf(" vous avez ramasse %d piece \n", piece);
         }
     }
 
@@ -216,16 +216,24 @@ int deplace_personnage()
         {
             tab[0]++;
             C[tab[0]][tab[1]] = 120;             //la case situé en bas prend la valeur 1
-            printf(" vous avez perdu %d vies \n", vies); //debug
-            printf(" vous avez ramasse %d piece \n", piece);
         }
     }
 
     else if (a == 0)
       return 42;
     else
-        printf("error,  veuillez saisir une direction correcte.");
+      {
+        printf("Veuillez saisir une direction correcte (2, 4, 6, 8)\n");
+	return -1;
+      }
     return 0;
+}
+
+void print_status()
+{
+  printf("\tVous avez perdu %d vies\n", vies);
+  printf("\tVous avez ramasse %d pieces", piece);
+  return;
 }
 
 void game_win()
@@ -273,81 +281,80 @@ void game_over()
     }
 }
 
-/* #include <termios.h> */
+struct termios oldtermios;
 
-/* static struct termios   save_termios; */
-/* static int              term_saved; */
+int tty_raw(int fd)
+{
+  struct termios newtermios;
+  if (tcgetattr(fd, &oldtermios) < 0)
+    return -1;
+  newtermios = oldtermios;
 
-/* int tty_raw(int fd) {       // RAW! mode */
-/*     struct termios  buf; */
+  newtermios.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 
-/*     if (tcgetattr(fd, &save_termios) < 0) // get the original state */
-/*         return -1; */
+  newtermios.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
 
-/*     buf = save_termios; */
+  newtermios.c_cflag &= ~(CSIZE | PARENB);
 
-/*     buf.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG); */
-/*                     // echo off, canonical mode off, extended input */
-/*     //                       processing off, signal chars off */
+  newtermios.c_cflag |= CS8;
+  newtermios.c_oflag &= ~(OPOST);
 
-/*     buf.c_iflag &= ~(BRKINT | ICRNL | ISTRIP | IXON); */
-/*                     // No SIGINT on BREAK, CR-toNL off, input parity */
-/*     //                    check off, don't strip the 8th bit on input, */
-/*     //                 ouput flow control off */
+  newtermios.c_cc[VMIN] = 1;
+  newtermios.c_cc[VTIME] = 0;
 
-/*     //buf.c_cflag &= ~(CSIZE | PARENB); */
-/*                     // clear size bits, parity checking off */
+  if (tcsetattr(fd, TCSAFLUSH, &newtermios) < 0)
+    return -1;
+  return 0;
 
-/*     //    buf.c_cflag |= CS8; */
-/*                     // set 8 bits/char */
+}
 
-/*     //    buf.c_oflag &= ~(OPOST); */
-/*                     //output processing off */
+int tty_reset(int fd)
+{
+  if (tcsetattr(fd, TCSAFLUSH, &oldtermios) < 0)
+    return -1;
+  return 0;
+}
 
-/*     buf.c_cc[VMIN] = 1;  // 1 byte at a time */
-/*     buf.c_cc[VTIME] = 0; // no timer on input */
-
-/*     if (tcsetattr(fd, TCSAFLUSH, &buf) < 0) */
-/*         return -1; */
-
-/*     term_saved = 1; */
-
-/*     return 0; */
-/* } */
-
-
-/* int tty_reset(int fd) { // set it to normal! */
-/*     if (term_saved) */
-/*         if (tcsetattr(fd, TCSAFLUSH, &save_termios) < 0) */
-/*             return -1; */
-
-/*     return 0; */
-/* } */
+void sigcatch(int sig)
+{
+  tty_reset(0);
+  exit(0);
+}
 
 int main()
 {
     if (intro() != 0)
     {
-      /* tty_raw(1); */
+      if (tty_raw(0) < 0)
+	{
+	  fprintf(stderr, "BUG\n");
+	  exit(1);
+	}
 
-        def_tableau();
-        affiche_tableau();
+      int status = 0;
+      char a;
+      int i = 0;
 
-        while((vies > 0) && (piece < 4))
-	  {
-	    if (deplace_personnage() == 42)
-	      break;
-            affiche_tableau();
-	    usleep(100);
-	  }
-    }
+      def_tableau();
+      affiche_tableau(0);
 
-    /* tty_reset(1); */
+      while((vies > 0) && (piece < 4) && (i = read(0, &a, 1) == 1))
+	{
+	  status = deplace_personnage(a);
+	  if (status == 42)
+	    break;
+	  else if (status == -1)
+	    printf("Veuillez saisir une direction correcte");
+	  affiche_tableau(status);
+	  usleep(100);
+	}
+    
+    tty_reset(0);
 
     game_over();
     game_win();
     printf("%s", NORMAL);
     system("clear");
-
+    }
     return 0;
 }
