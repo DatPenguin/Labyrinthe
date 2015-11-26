@@ -57,7 +57,7 @@ int deplace_personnage(int a)
 
 /////////////////////pour le haut//////////////////////
 
-    if (a == '8')
+    if (a == '8' || a == 'A')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
 
@@ -100,7 +100,7 @@ int deplace_personnage(int a)
     }
 /////////////////////pour la gauche////////////////////
 
-    else  if (a == '4')
+    else  if (a == '4' || a == 'D')
     {
         C[tab[0]][tab[1]] = 0;                 //la valeur de la case ou se situe le joueur devient 0.
 
@@ -140,7 +140,7 @@ int deplace_personnage(int a)
 
 /////////////////////pour la droite ////////////////////
 
-    else  if (a == '6')
+    else  if (a == '6' || a == 'C')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
         if(C[tab[0]][tab[1]+1] == 8)          //dans le cas ou un piege se trouve à droite...
@@ -180,7 +180,7 @@ int deplace_personnage(int a)
     }
 
 /////////////////////pour le bas////////////////////
-    else  if (a == '2')
+    else  if (a == '2' || a == 'B')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
         if(C[tab[0]+1][tab[1]] == 8)          //dans le cas ou un piege se trouve en bas...
@@ -220,11 +220,6 @@ int deplace_personnage(int a)
     else if (a == '0')
       return 42;
 
-    else
-      {
-        printf("Veuillez saisir une direction correcte (2, 4, 6, 8)\n");
-	return -1;
-      }
     return 0;
 }
 
@@ -315,6 +310,7 @@ int main()
       while((vies > 0) && (piece < 4))
 	{
 	  scanf("%c", &a);
+
 	  if (a == 'q')
 	    ff(0);
 	  status = deplace_personnage(a);

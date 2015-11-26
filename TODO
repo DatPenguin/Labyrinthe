@@ -1,1 +1,2 @@
-Le ECHO fonctionne bien, maintenant il faut faire en sorte qu'il n'y ait pas besoin d'appuyer sur ENTER
+- Gestion des signaux (Pas necessaire mais cool)
+- Faire en sorte qu'on ne puisse pas sortir de la map (x ou y negatifs)
