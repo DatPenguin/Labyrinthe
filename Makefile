@@ -6,7 +6,7 @@ SRC = $(shell find -type f -name "*.c")
 OBJ = $(SRC:.c=.o)
 RM = rm -rf
 
-all: hello $(NAME)
+all: hello $(NAME) clean
 
 $(NAME): $(OBJ)
 	@printf "\033[1;1;34m"
@@ -23,7 +23,7 @@ fclean:	clean
 	$(RM) $(NAME)
 	@printf "\033[0m"
 
-re: fclean all
+re: fclean all clean
 
 hello:
 	@printf "Compilation du $(NAME) en cours...\n"
@@ -43,4 +43,4 @@ credits:
 	@sleep 0.1
 	@printf "\t##################\n"
 
-.PHONY: all re clean fclean
+.PHONY: all re clean fclean credits

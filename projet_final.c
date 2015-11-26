@@ -9,6 +9,7 @@ int piece = 0;
 int vies = 3;
 int tab[2];
 int C[N][M]  =  {{0}};
+struct termios tty_attr_old;
 
 void affiche_tableau(int status) //affichage de la carte (tableau)
 {
@@ -53,13 +54,10 @@ void affiche_tableau(int status) //affichage de la carte (tableau)
 
 int deplace_personnage(int a)
 {
-  //int a;
-  //printf("%sVeuillez saisir une direction:\n", NORMAL);
-    //scanf("%d", &a);
 
 /////////////////////pour le haut//////////////////////
 
-    if (a == 8)
+    if (a == '8')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
 
@@ -102,7 +100,7 @@ int deplace_personnage(int a)
     }
 /////////////////////pour la gauche////////////////////
 
-    else  if (a == 4)
+    else  if (a == '4')
     {
         C[tab[0]][tab[1]] = 0;                 //la valeur de la case ou se situe le joueur devient 0.
 
@@ -142,7 +140,7 @@ int deplace_personnage(int a)
 
 /////////////////////pour la droite ////////////////////
 
-    else  if (a == 6)
+    else  if (a == '6')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
         if(C[tab[0]][tab[1]+1] == 8)          //dans le cas ou un piege se trouve à droite...
@@ -182,7 +180,7 @@ int deplace_personnage(int a)
     }
 
 /////////////////////pour le bas////////////////////
-    else  if (a == 2)
+    else  if (a == '2')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
         if(C[tab[0]+1][tab[1]] == 8)          //dans le cas ou un piege se trouve en bas...
@@ -219,8 +217,9 @@ int deplace_personnage(int a)
         }
     }
 
-    else if (a == 0)
+    else if (a == '0')
       return 42;
+
     else
       {
         printf("Veuillez saisir une direction correcte (2, 4, 6, 8)\n");
@@ -281,65 +280,43 @@ void game_over()
     }
 }
 
-struct termios oldtermios;
-
-int tty_raw(int fd)
+void tty_raw()
 {
-  struct termios newtermios;
-  if (tcgetattr(fd, &oldtermios) < 0)
-    return -1;
-  newtermios = oldtermios;
+  struct termios tty_attr;
 
-  newtermios.c_lflag &= ~(ECHO | ICANON | IEXTEN);
+  tcgetattr(0, &tty_attr);
 
-  newtermios.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
+  tty_attr.c_lflag &= (~(ICANON | ECHO));
+  tty_attr.c_cc[CTIME] = 0;
+  tty_attr.c_cc[VMIN] = 1;
 
-  newtermios.c_cflag &= ~(CSIZE | PARENB);
-
-  newtermios.c_cflag |= CS8;
-  newtermios.c_oflag &= ~(OPOST);
-
-  newtermios.c_cc[VMIN] = 1;
-  newtermios.c_cc[VTIME] = 0;
-
-  if (tcsetattr(fd, TCSAFLUSH, &newtermios) < 0)
-    return -1;
-  return 0;
-
+  tcsetattr(0, TCSANOW, &tty_attr);
 }
 
-int tty_reset(int fd)
+void ff(int status)
 {
-  if (tcsetattr(fd, TCSAFLUSH, &oldtermios) < 0)
-    return -1;
-  return 0;
-}
-
-void sigcatch(int sig)
-{
-  tty_reset(0);
-  exit(0);
+  tcsetattr(0, TCSANOW, &tty_attr_old);
+  exit(status);
 }
 
 int main()
 {
     if (intro() != 0)
     {
-      if (tty_raw(0) < 0)
-	{
-	  fprintf(stderr, "BUG\n");
-	  exit(1);
-	}
+      tcgetattr(0, &tty_attr_old);
+      tty_raw();
 
       int status = 0;
       char a;
-      int i = 0;
 
       def_tableau();
       affiche_tableau(0);
 
-      while((vies > 0) && (piece < 4) && (i = read(0, &a, 1) == 1))
+      while((vies > 0) && (piece < 4))
 	{
+	  scanf("%c", &a);
+	  if (a == 'q')
+	    ff(0);
 	  status = deplace_personnage(a);
 	  if (status == 42)
 	    break;
@@ -349,12 +326,12 @@ int main()
 	  usleep(100);
 	}
     
-    tty_reset(0);
+      tcsetattr(0, TCSANOW, &tty_attr_old);
 
-    game_over();
-    game_win();
-    printf("%s", NORMAL);
-    system("clear");
+      game_over();
+      game_win();
+      printf("%s", NORMAL);
+      system("clear");
     }
     return 0;
 }
