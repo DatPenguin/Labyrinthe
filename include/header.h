@@ -23,6 +23,17 @@
 
  #define DEBUG 1
 
+ #define FLEUR	"%s1 "
+ #define ARBRE	"%s2 "
+ #define ROCHER "%s3 "
+ #define CLEF	"%s4 "
+ #define PIECE	"%s5 "
+ #define LOCK	"%s6 "
+ #define PIEGE	"%s7 "
+ #define MOB	"%s8 "
+ #define TRESOR	"%s9 "
+ #define CROIX	120
+
  int intro();
  void def_tableau();
  void affiche_tableau(int);

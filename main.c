@@ -30,16 +30,22 @@ void affiche_tableau(int status) //affichage de la carte (tableau)
 	    printf("%sx ", BLEU);
 	    break;
 	  case 8:
-	    printf("%s8 ", LIGHT_ROUGE);
+	    printf(ARBRE, LIGHT_ROUGE);
 	    break;
 	  case 6:
-	    printf("%s6 ", JAUNE);
+	    printf(PIECE, JAUNE);
+	    break;
+	  case 4:
+	    printf(PIEGE, ROUGE);
+	    break;
+	  case 9:
+	    printf(LOCK, VIOLET);
 	    break;
 	  case 5:
-	    printf("%s5 ", LIGHT_VERT);
+	    printf(CLEF, LIGHT_VERT);
 	    break;
 	  case 42:
-	    printf("%s9 ", VERT);
+	    printf("%s1 ", VERT);
 	    break;
 	  default:
 	    printf("%s0 ", LIGHT_GRIS);
@@ -61,7 +67,7 @@ int deplace_personnage(int a)
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
 
-        if(C[tab[0]-1][tab[1]] == 8)           //dans le cas ou un piege se trouve en haut...
+        if(C[tab[0]-1][tab[1]] == 8 || C[tab[0]-1][tab[1]] == 9)           //dans le cas ou un piege se trouve en haut...
             C[tab[0]][tab[1]] = 120;             //la case situé en haut prend la valeur 1
         else if(C[tab[0]-1][tab[1]] == 4)      //dans le cas ou une pièce se trouve en haut...
         {
@@ -77,10 +83,13 @@ int deplace_personnage(int a)
         }
         else if(C[tab[0]-1][tab[1]] == 5)
         {
-            //tab[0] = tab[0]-1;
             tab[0]--;
             C[tab[0]][tab[1]] = 120;
-            C[9][10] = 0;
+	    //            C[9][10] = 0;
+	    C[3][6] = 0;
+	    C[15][15] = 0;
+	    C[5][1] = 0;
+	    C[9][3] = 0;
         }
         else if(C[tab[0]-1][tab[1]] == 2)
         {
@@ -104,7 +113,7 @@ int deplace_personnage(int a)
     {
         C[tab[0]][tab[1]] = 0;                 //la valeur de la case ou se situe le joueur devient 0.
 
-        if(C[tab[0]][tab[1]-1] == 8)           //dans le cas ou un piege se trouve à gauche...
+        if(C[tab[0]][tab[1]-1] == 8 || C[tab[0]][tab[1]-1] == 9)           //dans le cas ou un piege se trouve à gauche...
             C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
         else if(C[tab[0]][tab[1]-1] == 4)      //dans le cas ou une pièce se trouve à gauche...
         {
@@ -122,7 +131,11 @@ int deplace_personnage(int a)
         {
             tab[1]--;
             C[tab[0]][tab[1]] = 120;
-            C[9][10] = 0;
+	    //            C[9][10] = 0;
+	    C[3][6] = 0;
+	    C[15][15] = 0;
+	    C[5][1] = 0;
+	    C[9][3] = 0;
         }
         else if(C[tab[0]][tab[1]-1] == 2)
         {
@@ -143,7 +156,7 @@ int deplace_personnage(int a)
     else  if (a == '6' || a == 'C')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
-        if(C[tab[0]][tab[1]+1] == 8)          //dans le cas ou un piege se trouve à droite...
+        if(C[tab[0]][tab[1]+1] == 8 || C[tab[0]][tab[1]+1] == 9)          //dans le cas ou un piege se trouve à droite...
             C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
         else if(C[tab[0]][tab[1]+1] == 4)     //dans le cas ou une pièce se trouve à droite...
         {
@@ -161,7 +174,11 @@ int deplace_personnage(int a)
         {
             tab[1]++;
             C[tab[0]][tab[1]] = 120;
-            C[9][10] = 0;
+	    //            C[9][10] = 0;
+	    C[3][6] = 0;
+	    C[15][15] = 0;
+	    C[5][1] = 0;
+	    C[9][3] = 0;
         }
         else if(C[tab[0]][tab[1]+1] == 2)
         {
@@ -183,7 +200,7 @@ int deplace_personnage(int a)
     else  if (a == '2' || a == 'B')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
-        if(C[tab[0]+1][tab[1]] == 8)          //dans le cas ou un piege se trouve en bas...
+        if(C[tab[0]+1][tab[1]] == 8 || C[tab[0]+1][tab[1]] == 9)          //dans le cas ou un piege se trouve en bas...
             C[tab[0]][tab[1]] = 120;             //la case situé en bas prend la valeur 1
         else  if(C[tab[0]+1][tab[1]] == 4)    //dans le cas ou une pièce se trouve en bas...
         {
@@ -201,7 +218,11 @@ int deplace_personnage(int a)
         {
             tab[0]++;
             C[tab[0]][tab[1]] = 120;
-            C[9][10] = 0;
+	    //            C[9][10] = 0;
+	    C[3][6] = 0;
+	    C[15][15] = 0;
+	    C[5][1] = 0;
+	    C[9][3] = 0;
         }
         else if(C[tab[0]+1][tab[1]] == 2)
         {
@@ -230,9 +251,9 @@ void print_status()
   return;
 }
 
-void game_win()
+void game_win(int cheat)
 {
-    if(piece > 3)
+    if(piece > 3 || cheat == 1)
     {
         system("clear");
 
@@ -313,6 +334,13 @@ int main()
 
 	  if (a == 'q')
 	    ff(0);
+	  if (a == 'w')
+	    {
+	      game_win(1);
+	      system("sleep 1 && clear && make credits && sleep 1 && clear");
+	      tcsetattr(0, TCSANOW, &tty_attr_old);
+	      exit(43);
+	    }
 	  status = deplace_personnage(a);
 	  if (status == 42)
 	    break;
@@ -325,9 +353,9 @@ int main()
       tcsetattr(0, TCSANOW, &tty_attr_old);
 
       game_over();
-      game_win();
+      game_win(0);
       printf("%s", NORMAL);
-      system("clear");
+      system("clear && make credits");
     }
     return 0;
 }
