@@ -7,9 +7,9 @@ extern int vies;
 extern int tab[2];
 extern int C[N][M];
 
-int intro()
+char intro()
 {
-    int digit = 0;
+    char digit = 0;
 
     system("clear");
     printf ("\n\n\n\n\t\t\t************************************\n");
@@ -29,7 +29,7 @@ int intro()
     printf ("\t\t\t*  (appuyez sur 5 pour continuer)  *\n");
     printf ("\t\t\t*      (ou sur 0 pour quitter)     *\n");
     printf ("\t\t\t************************************\n\n\n\n");
-    scanf("%d", &digit);
+    scanf("%c", &digit);
     return digit;
 }
 

@@ -34,7 +34,7 @@
  #define TRESOR	"%s9 "
  #define CROIX	120
 
- int intro();
+ char intro();
  void def_tableau();
  void affiche_tableau(int);
  int deplace_personnage();

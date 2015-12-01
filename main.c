@@ -246,7 +246,7 @@ int deplace_personnage(int a)
 
 void print_status()
 {
-  printf("\tVous avez perdu %d vies\n", vies);
+  printf("%s\tVous avez %d vies\n", NORMAL, vies);
   printf("\tVous avez ramasse %d pieces", piece);
   return;
 }
@@ -317,10 +317,10 @@ void ff(int status)
 
 int main()
 {
+  tcgetattr(0, &tty_attr_old);
+  tty_raw();
     if (intro() != 0)
     {
-      tcgetattr(0, &tty_attr_old);
-      tty_raw();
 
       int status = 0;
       char a;
