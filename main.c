@@ -355,7 +355,7 @@ int main()
       game_over();
       game_win(0);
       printf("%s", NORMAL);
-      system("clear && make credits");
+      system("sleep 1 && clear && make credits && sleep 1 && clear");
     }
     return 0;
 }
