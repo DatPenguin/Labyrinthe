@@ -72,206 +72,201 @@ int deplace_personnage(int a)
 
 /////////////////////pour le haut//////////////////////
 
-    if (a == '8' || a == 'A')
+  if (a == '8' || a == 'A')
     {
-        C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
+      C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
 
-        if(C[tab[0]-1][tab[1]] == 8 || C[tab[0]-1][tab[1]] == 9)           //dans le cas ou un piege se trouve en haut...
-            C[tab[0]][tab[1]] = 120;             //la case situé en haut prend la valeur 1
-	else if (C[tab[0]-1][tab[1]] == 1)
+      if(C[tab[0]-1][tab[1]] == 8 || C[tab[0]-1][tab[1]] == 9)           //dans le cas ou un obstacle se trouve en haut...
+	C[tab[0]][tab[1]] = 120;             //On ne change pas la position
+      else if (C[tab[0]-1][tab[1]] == 1)
 	{
-		C[tab[0]][tab[1]] = 120;
-		vies--;
+	  C[tab[0]][tab[1]] = 120;
+	  vies--;
 	}
-        else if(C[tab[0]-1][tab[1]] == 4)      //dans le cas ou une pièce se trouve en haut...
+      else if(C[tab[0]-1][tab[1]] == 4)      //dans le cas ou un piège se trouve en haut...
         {
-            vies--;
-            tab[0] = tab[0]-1;
-            C[tab[0]][tab[1]] = 120;             //la case situé en haut prend la valeur 1
+	  vies--; //On perd une vie
+	  tab[0] = tab[0]-1;
+	  C[tab[0]][tab[1]] = 120;             //la case situé en haut prend la valeur 1
         }
-        else if(C[tab[0]-1][tab[1]] == 6)      //dans le cas ou une pièce se trouve en haut...
+      else if(C[tab[0]-1][tab[1]] == 6)      //dans le cas ou une pièce se trouve en haut...
         {
-            piece++;    //le joueur gagne une piece
-            tab[0]--;
-            C[tab[0]][tab[1]] = 120;             //la case situé en haut prend la valeur 1
+	  piece++;    //le joueur gagne une piece
+	  tab[0]--;
+	  C[tab[0]][tab[1]] = 120;
         }
-        else if(C[tab[0]-1][tab[1]] == 5)
+      else if(C[tab[0]-1][tab[1]] == 5) //Si on recupere la clef
         {
-            tab[0]--;
-            C[tab[0]][tab[1]] = 120;
-	    C[3][6] = 0;
-	    C[15][15] = 0;
-	    C[5][1] = 0;
-	    C[9][3] = 0;
+	  tab[0]--;
+	  C[tab[0]][tab[1]] = 120;
+	  C[3][6] = 0; //Ouverture des serrures
+	  C[15][15] = 0;
+	  C[5][1] = 0;
+	  C[9][3] = 0;
         }
-        else if(C[tab[0]-1][tab[1]] == 2)
+      else if(C[tab[0]-1][tab[1]] == 2) //Le tresor
         {
-            piece += 3;
-            tab[0] = tab[0]-1;
-            C[tab[0]][tab[1]] = 120;
-            C[9][10] = 8;
+	  piece += 3;
+	  tab[0] = tab[0]-1;
+	  C[tab[0]][tab[1]] = 120;
+	  C[9][10] = 8;
         }
-        else if(C[tab[0]-1][tab[1]] == C[tab[0]][0])
-            C[tab[0]][tab[1]] = 120;
-        else
+      else if(C[tab[0]-1][tab[1]] == C[tab[0]][0]) //Pour eviter de sortir de la map
+	C[tab[0]][tab[1]] = 120;
+      else  //Cas general
         {
-            tab[0]--;
-            C[tab[0]][tab[1]] = 120;             //la case situé en haut prend la valeur 1
+	  tab[0]--;
+	  C[tab[0]][tab[1]] = 120;             //la case situé en haut prend la valeur 1
         }
-
     }
 /////////////////////pour la gauche////////////////////
 
-    else  if (a == '4' || a == 'D')
+  else  if (a == '4' || a == 'D')
     {
       if (tab[1] == 0)
 	return 0;
-      C[tab[0]][tab[1]] = 0;                 //la valeur de la case ou se situe le joueur devient 0.
-
-        if(C[tab[0]][tab[1]-1] == 8 || C[tab[0]][tab[1]-1] == 9)           //dans le cas ou un piege se trouve à gauche...
-            C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
-	else if (C[tab[0]][tab[1]-1] == 1)
+      C[tab[0]][tab[1]] = 0;
+      
+      if(C[tab[0]][tab[1]-1] == 8 || C[tab[0]][tab[1]-1] == 9)
+	C[tab[0]][tab[1]] = 120;
+      else if (C[tab[0]][tab[1]-1] == 1)
 	{
-		C[tab[0]][tab[1]] = 120;
-		vies--;
+	  C[tab[0]][tab[1]] = 120;
+	  vies--;
 	}
-        else if(C[tab[0]][tab[1]-1] == 4)      //dans le cas ou une pièce se trouve à gauche...
+      else if(C[tab[0]][tab[1]-1] == 4)
         {
-            vies--;
-            tab[1]--;
-            C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
+	  vies--;
+	  tab[1]--;
+	  C[tab[0]][tab[1]] = 120;
         }
-        else if(C[tab[0]][tab[1]-1] == 6)      //dans le cas ou une pièce se trouve à gauche...
+      else if(C[tab[0]][tab[1]-1] == 6)
         {
-            piece++;               //le joueur gagne une piece
-            tab[1]--;
-            C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
+	  piece++;
+	  tab[1]--;
+	  C[tab[0]][tab[1]] = 120;
         }
-        else if(C[tab[0]][tab[1]-1] == 5)
+      else if(C[tab[0]][tab[1]-1] == 5)
         {
-            tab[1]--;
-            C[tab[0]][tab[1]] = 120;
-	    //            C[9][10] = 0;
-	    C[3][6] = 0;
-	    C[15][15] = 0;
-	    C[5][1] = 0;
-	    C[9][3] = 0;
+	  tab[1]--;
+	  C[tab[0]][tab[1]] = 120;
+	  C[3][6] = 0;
+	  C[15][15] = 0;
+	  C[5][1] = 0;
+	  C[9][3] = 0;
         }
-        else if(C[tab[0]][tab[1]-1] == 2)
+      else if(C[tab[0]][tab[1]-1] == 2)
         {
-            piece += 3;
-            tab[1]--;
-            C[tab[0]][tab[1]] = 120;
-            C[9][10] = 8;
+	  piece += 3;
+	  tab[1]--;
+	  C[tab[0]][tab[1]] = 120;
+	  C[9][10] = 8;
         }
-        else
+      else
         {
-            tab[1]--;
-            C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
+	  tab[1]--;
+	  C[tab[0]][tab[1]] = 120;
         }
     }
 
 /////////////////////pour la droite ////////////////////
 
-    else  if (a == '6' || a == 'C')
+  else  if (a == '6' || a == 'C')
     {
-        C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
-        if(C[tab[0]][tab[1]+1] == 8 || C[tab[0]][tab[1]+1] == 9)          //dans le cas ou un piege se trouve à droite...
-            C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
-	else if (C[tab[0]][tab[1]+1] == 1)
+      C[tab[0]][tab[1]] = 0;
+      if(C[tab[0]][tab[1]+1] == 8 || C[tab[0]][tab[1]+1] == 9)
+	C[tab[0]][tab[1]] = 120;
+      else if (C[tab[0]][tab[1]+1] == 1)
 	{
-		C[tab[0]][tab[1]] = 120;
-		vies--;
+	  C[tab[0]][tab[1]] = 120;
+	  vies--;
 	}
-        else if(C[tab[0]][tab[1]+1] == 4)     //dans le cas ou une pièce se trouve à droite...
+      else if(C[tab[0]][tab[1]+1] == 4)
         {
-            vies--;
-            tab[1]++;
-            C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
+	  vies--;
+	  tab[1]++;
+	  C[tab[0]][tab[1]] = 120;
         }
-        else if(C[tab[0]][tab[1]+1] == 6)     //dans le cas ou une pièce se trouve à droite...
+      else if(C[tab[0]][tab[1]+1] == 6)
         {
-            piece++;               //le joueur gagne une piece
-            tab[1]++;
-            C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
+	  piece++;
+	  tab[1]++;
+	  C[tab[0]][tab[1]] = 120;
         }
-        else if(C[tab[0]][tab[1]+1] == 5)
+      else if(C[tab[0]][tab[1]+1] == 5)
         {
-            tab[1]++;
-            C[tab[0]][tab[1]] = 120;
-	    //            C[9][10] = 0;
-	    C[3][6] = 0;
-	    C[15][15] = 0;
-	    C[5][1] = 0;
-	    C[9][3] = 0;
+	  tab[1]++;
+	  C[tab[0]][tab[1]] = 120;
+	  C[3][6] = 0;
+	  C[15][15] = 0;
+	  C[5][1] = 0;
+	  C[9][3] = 0;
         }
-        else if(C[tab[0]][tab[1]+1] == 2)
+      else if(C[tab[0]][tab[1]+1] == 2)
         {
-            piece += 3;
-            tab[1]++;
-            C[tab[0]][tab[1]] = 120;
-            C[9][10] = 8;
+	  piece += 3;
+	  tab[1]++;
+	  C[tab[0]][tab[1]] = 120;
+	  C[9][10] = 8;
         }
-        else if(C[tab[0]][tab[1]+1] == C[19][tab[1]])
-            C[tab[0]][tab[1]] = 120;
-        else
+      else if(C[tab[0]][tab[1]+1] == C[19][tab[1]])
+	C[tab[0]][tab[1]] = 120;
+      else
         {
-            tab[1]++;
-            C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
+	  tab[1]++;
+	  C[tab[0]][tab[1]] = 120;
         }
     }
 
 /////////////////////pour le bas////////////////////
     else  if (a == '2' || a == 'B')
     {
-        C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
-        if(C[tab[0]+1][tab[1]] == 8 || C[tab[0]+1][tab[1]] == 9 || C[tab[0]+1][tab[1]] == 3)          //dans le cas ou un piege se trouve en bas...
-            C[tab[0]][tab[1]] = 120;             //la case situé en bas prend la valeur 1
-	else if (C[tab[0]+1][tab[1]] == 1)
+      C[tab[0]][tab[1]] = 0;
+      if(C[tab[0]+1][tab[1]] == 8 || C[tab[0]+1][tab[1]] == 9 || C[tab[0]+1][tab[1]] == 3)
+	C[tab[0]][tab[1]] = 120;
+      else if (C[tab[0]+1][tab[1]] == 1)
 	{
-		C[tab[0]][tab[1]] = 120;
-		vies--;
+	  C[tab[0]][tab[1]] = 120;
+	  vies--;
 	}        
-	else  if(C[tab[0]+1][tab[1]] == 4)    //dans le cas ou une pièce se trouve en bas...
+      else  if(C[tab[0]+1][tab[1]] == 4)
         {
-            vies--;
-            tab[0]++;
-            C[tab[0]][tab[1]] = 120;             //la case situé en bas prend la valeur 1
+	  vies--;
+	  tab[0]++;
+	  C[tab[0]][tab[1]] = 120;
         }
-        else  if(C[tab[0]+1][tab[1]] == 6)    //dans le cas ou une pièce se trouve en bas...
+      else  if(C[tab[0]+1][tab[1]] == 6)
         {
-            piece++;
-            tab[0]++;
-            C[tab[0]][tab[1]] = 120;             //la case situé en bas prend la valeur 1
+	  piece++;
+	  tab[0]++;
+	  C[tab[0]][tab[1]] = 120;
         }
-        else if(C[tab[0]+1][tab[1]] == 5)
+      else if(C[tab[0]+1][tab[1]] == 5)
         {
-            tab[0]++;
-            C[tab[0]][tab[1]] = 120;
-	    //            C[9][10] = 0;
-	    C[3][6] = 0;
-	    C[15][15] = 0;
-	    C[5][1] = 0;
-	    C[9][3] = 0;
+	  tab[0]++;
+	  C[tab[0]][tab[1]] = 120;
+	  C[3][6] = 0;
+	  C[15][15] = 0;
+	  C[5][1] = 0;
+	  C[9][3] = 0;
         }
-        else if(C[tab[0]+1][tab[1]] == 2)
+      else if(C[tab[0]+1][tab[1]] == 2)
         {
-            piece += 3;
-            tab[0]++;
-            C[tab[0]][tab[1]] = 120;
-            C[9][10] = 8;
+	  piece += 3;
+	  tab[0]++;
+	  C[tab[0]][tab[1]] = 120;
+	  C[9][10] = 8;
         }
-        else
+      else
         {
-            tab[0]++;
-            C[tab[0]][tab[1]] = 120;             //la case situé en bas prend la valeur 1
+	  tab[0]++;
+	  C[tab[0]][tab[1]] = 120;
         }
     }
-
-    else if (a == '0')
+    else if (a == '0') //Si on saisit 0
       return 42;
 
-    return 0;
+  return 0;
 }
 
 void print_status()

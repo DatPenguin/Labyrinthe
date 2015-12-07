@@ -41,5 +41,7 @@
  void print_status();
  void game_win();
  void game_over();
+ void tty_raw();
+ void ff(int);
 
 #endif
