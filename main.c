@@ -47,6 +47,9 @@ void affiche_tableau(int status) //affichage de la carte (tableau)
 	  case 42:
 	    printf("%s1 ", VERT);
 	    break;
+	  case 2:
+	    printf(TRESOR, LIGHT_VERT);
+	    break;
 	  default:
 	    printf("%s0 ", LIGHT_GRIS);
 	    break;
@@ -111,7 +114,9 @@ int deplace_personnage(int a)
 
     else  if (a == '4' || a == 'D')
     {
-        C[tab[0]][tab[1]] = 0;                 //la valeur de la case ou se situe le joueur devient 0.
+      if (tab[1] == 0)
+	return 0;
+      C[tab[0]][tab[1]] = 0;                 //la valeur de la case ou se situe le joueur devient 0.
 
         if(C[tab[0]][tab[1]-1] == 8 || C[tab[0]][tab[1]-1] == 9)           //dans le cas ou un piege se trouve à gauche...
             C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
@@ -253,7 +258,7 @@ void print_status()
 
 void game_win(int cheat)
 {
-    if(piece > 3 || cheat == 1)
+    if(piece > 10 || cheat == 1)
     {
         system("clear");
 
