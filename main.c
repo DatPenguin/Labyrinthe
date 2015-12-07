@@ -6,7 +6,7 @@
 #include <termios.h>
 
 int piece = 0;
-int vies = 3;
+int vies = 10;
 int tab[2];
 int C[N][M]  =  {{0}};
 struct termios tty_attr_old;
@@ -30,7 +30,10 @@ void affiche_tableau(int status) //affichage de la carte (tableau)
 	    printf("%sx ", BLEU);
 	    break;
 	  case 8:
-	    printf(ARBRE, LIGHT_ROUGE);
+	    printf(ARBRE, VERT);
+	    break;
+	  case 3:
+	    printf(ROCHER, CYAN);
 	    break;
 	  case 6:
 	    printf(PIECE, JAUNE);
@@ -49,6 +52,9 @@ void affiche_tableau(int status) //affichage de la carte (tableau)
 	    break;
 	  case 2:
 	    printf(TRESOR, LIGHT_VERT);
+	    break;
+	  case 1:
+	    printf(MOB, ROUGE);
 	    break;
 	  default:
 	    printf("%s0 ", LIGHT_GRIS);
@@ -72,6 +78,11 @@ int deplace_personnage(int a)
 
         if(C[tab[0]-1][tab[1]] == 8 || C[tab[0]-1][tab[1]] == 9)           //dans le cas ou un piege se trouve en haut...
             C[tab[0]][tab[1]] = 120;             //la case situé en haut prend la valeur 1
+	else if (C[tab[0]-1][tab[1]] == 1)
+	{
+		C[tab[0]][tab[1]] = 120;
+		vies--;
+	}
         else if(C[tab[0]-1][tab[1]] == 4)      //dans le cas ou une pièce se trouve en haut...
         {
             vies--;
@@ -88,7 +99,6 @@ int deplace_personnage(int a)
         {
             tab[0]--;
             C[tab[0]][tab[1]] = 120;
-	    //            C[9][10] = 0;
 	    C[3][6] = 0;
 	    C[15][15] = 0;
 	    C[5][1] = 0;
@@ -120,6 +130,11 @@ int deplace_personnage(int a)
 
         if(C[tab[0]][tab[1]-1] == 8 || C[tab[0]][tab[1]-1] == 9)           //dans le cas ou un piege se trouve à gauche...
             C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
+	else if (C[tab[0]][tab[1]-1] == 1)
+	{
+		C[tab[0]][tab[1]] = 120;
+		vies--;
+	}
         else if(C[tab[0]][tab[1]-1] == 4)      //dans le cas ou une pièce se trouve à gauche...
         {
             vies--;
@@ -163,6 +178,11 @@ int deplace_personnage(int a)
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
         if(C[tab[0]][tab[1]+1] == 8 || C[tab[0]][tab[1]+1] == 9)          //dans le cas ou un piege se trouve à droite...
             C[tab[0]][tab[1]] = 120;             //la case situé à droite prend la valeur 1
+	else if (C[tab[0]][tab[1]+1] == 1)
+	{
+		C[tab[0]][tab[1]] = 120;
+		vies--;
+	}
         else if(C[tab[0]][tab[1]+1] == 4)     //dans le cas ou une pièce se trouve à droite...
         {
             vies--;
@@ -205,9 +225,14 @@ int deplace_personnage(int a)
     else  if (a == '2' || a == 'B')
     {
         C[tab[0]][tab[1]] = 0;                //la valeur de la case ou se situe le joueur devient 0.
-        if(C[tab[0]+1][tab[1]] == 8 || C[tab[0]+1][tab[1]] == 9)          //dans le cas ou un piege se trouve en bas...
+        if(C[tab[0]+1][tab[1]] == 8 || C[tab[0]+1][tab[1]] == 9 || C[tab[0]+1][tab[1]] == 3)          //dans le cas ou un piege se trouve en bas...
             C[tab[0]][tab[1]] = 120;             //la case situé en bas prend la valeur 1
-        else  if(C[tab[0]+1][tab[1]] == 4)    //dans le cas ou une pièce se trouve en bas...
+	else if (C[tab[0]+1][tab[1]] == 1)
+	{
+		C[tab[0]][tab[1]] = 120;
+		vies--;
+	}        
+	else  if(C[tab[0]+1][tab[1]] == 4)    //dans le cas ou une pièce se trouve en bas...
         {
             vies--;
             tab[0]++;
@@ -258,7 +283,7 @@ void print_status()
 
 void game_win(int cheat)
 {
-    if(piece > 10 || cheat == 1)
+    if(piece >= 10 || cheat == 1)
     {
         system("clear");
 
@@ -333,7 +358,7 @@ int main()
       def_tableau();
       affiche_tableau(0);
 
-      while((vies > 0) && (piece < 4))
+      while((vies > 0) && (piece < 10))
 	{
 	  scanf("%c", &a);
 
