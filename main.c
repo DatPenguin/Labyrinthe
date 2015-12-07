@@ -64,7 +64,6 @@ void affiche_tableau(int status) //affichage de la carte (tableau)
       printf("\n");
     }
   putchar('\n');
-
 }
 
 int deplace_personnage(int a)
@@ -219,7 +218,7 @@ int deplace_personnage(int a)
     }
 
 /////////////////////pour le bas////////////////////
-    else  if (a == '2' || a == 'B')
+  else  if (a == '2' || a == 'B')
     {
       C[tab[0]][tab[1]] = 0;
       if(C[tab[0]+1][tab[1]] == 8 || C[tab[0]+1][tab[1]] == 9 || C[tab[0]+1][tab[1]] == 3)
@@ -263,8 +262,8 @@ int deplace_personnage(int a)
 	  C[tab[0]][tab[1]] = 120;
         }
     }
-    else if (a == '0') //Si on saisit 0
-      return 42;
+  else if (a == '0') //Si on saisit 0
+    return 42;
 
   return 0;
 }
@@ -278,46 +277,47 @@ void print_status()
 
 void game_win(int cheat)
 {
-    if(piece >= 10 || cheat == 1)
+  if(piece >= 10 || cheat == 1)
     {
-        system("clear");
+      system("clear");
 
-        printf ("%s ________  _______  __   __  _______ \n", JAUNE );
-        printf ("%s|        ||   _   ||  |_|  ||       |\n", JAUNE );
-        printf ("%s|    ____||  | |  ||       ||    ___|\n", JAUNE );
-        printf ("%s|   |  __ |  |_|  ||       ||   |___ \n", JAUNE );
-        printf ("%s|   | |  ||       ||       ||    ___|\n", JAUNE );
-        printf ("%s|   |__| ||   _   || ||_|| ||   |___ \n", JAUNE );
-        printf ("%s|________||__| |__||_|   |_||_______|\n", JAUNE );
-        printf ("%s ___           ___   ___   ___    __ \n", JAUNE );
-        printf ("%s|   |   ___   |   | |___| |   |  |  |\n", JAUNE );
-        printf ("%s|    |_|   |_|    |  ___  |    | |  |\n", JAUNE );
-        printf ("%s |               |  |   | |     ||  |\n", JAUNE );
-        printf ("%s  |      _      |   |   | |  ||  |  |\n", JAUNE );
-        printf ("%s   |    | |    |    |   | |  | |    |\n", JAUNE );
-        printf ("%s    |__|   |__|     |___| |__|  |___|%s\n", JAUNE,  NORMAL );
+      printf ("%s ________  _______  __   __  _______ \n", JAUNE );
+      printf ("%s|        ||   _   ||  |_|  ||       |\n", JAUNE );
+      printf ("%s|    ____||  | |  ||       ||    ___|\n", JAUNE );
+      printf ("%s|   |  __ |  |_|  ||       ||   |___ \n", JAUNE );
+      printf ("%s|   | |  ||       ||       ||    ___|\n", JAUNE );
+      printf ("%s|   |__| ||   _   || ||_|| ||   |___ \n", JAUNE );
+      printf ("%s|________||__| |__||_|   |_||_______|\n", JAUNE );
+      printf ("%s ___           ___   ___   ___    __ \n", JAUNE );
+      printf ("%s|   |   ___   |   | |___| |   |  |  |\n", JAUNE );
+      printf ("%s|    |_|   |_|    |  ___  |    | |  |\n", JAUNE );
+      printf ("%s |               |  |   | |     ||  |\n", JAUNE );
+      printf ("%s  |      _      |   |   | |  ||  |  |\n", JAUNE );
+      printf ("%s   |    | |    |    |   | |  | |    |\n", JAUNE );
+      printf ("%s    |__|   |__|     |___| |__|  |___|%s\n", JAUNE,  NORMAL );
     }
 }
+
 void game_over()
 {
-    if (vies < 1)
+  if (vies < 1)
     {
-        system("clear");
+      system("clear");
 
-        printf ("%s _______  _______  __   __  _______ \n", ROUGE );
-        printf ("%s|       ||   _   ||  |_|  ||       |\n", ROUGE );
-        printf ("%s|    ___||  |_|  ||       ||    ___|\n", ROUGE );
-        printf ("%s|   | __ |       ||       ||   |___\n", ROUGE );
-        printf ("%s|   ||  ||       ||       ||    ___|\n", ROUGE );
-        printf ("%s|   |_| ||   _   || ||_|| ||   |___ \n", ROUGE );
-        printf ("%s|_______||__| |__||_|   |_||_______|\n", ROUGE );
-        printf ("%s _______  __   __  _______  ______  \n", ROUGE );
-        printf ("%s|       ||  | |  ||       ||    _ | \n", ROUGE );
-        printf ("%s|   _   ||  |_|  ||    ___||   | || \n", ROUGE );
-        printf ("%s|  | |  ||       ||   |___ |   |_|| \n", ROUGE );
-        printf ("%s|  |_|  ||       ||    ___||    __ |\n", ROUGE );
-        printf ("%s|       | |     | |   |___ |   |  ||\n", ROUGE );
-        printf ("%s|_______|  |___|  |_______||___|  ||%s\n", ROUGE,  NORMAL);
+      printf ("%s _______  _______  __   __  _______ \n", ROUGE );
+      printf ("%s|       ||   _   ||  |_|  ||       |\n", ROUGE );
+      printf ("%s|    ___||  |_|  ||       ||    ___|\n", ROUGE );
+      printf ("%s|   | __ |       ||       ||   |___\n", ROUGE );
+      printf ("%s|   ||  ||       ||       ||    ___|\n", ROUGE );
+      printf ("%s|   |_| ||   _   || ||_|| ||   |___ \n", ROUGE );
+      printf ("%s|_______||__| |__||_|   |_||_______|\n", ROUGE );
+      printf ("%s _______  __   __  _______  ______  \n", ROUGE );
+      printf ("%s|       ||  | |  ||       ||    _ | \n", ROUGE );
+      printf ("%s|   _   ||  |_|  ||    ___||   | || \n", ROUGE );
+      printf ("%s|  | |  ||       ||   |___ |   |_|| \n", ROUGE );
+      printf ("%s|  |_|  ||       ||    ___||    __ |\n", ROUGE );
+      printf ("%s|       | |     | |   |___ |   |  ||\n", ROUGE );
+      printf ("%s|_______|  |___|  |_______||___|  ||%s\n", ROUGE,  NORMAL);
     }
 }
 
@@ -344,12 +344,12 @@ int main()
 {
   tcgetattr(0, &tty_attr_old);
   tty_raw();
-    if (intro() != 0)
+  if (intro() != 0)
     {
 
       int status = 0;
       char a;
-
+      
       def_tableau();
       affiche_tableau(0);
 
@@ -382,5 +382,5 @@ int main()
       printf("%s", NORMAL);
       system("sleep 1 && clear && make credits && sleep 1 && clear");
     }
-    return 0;
+  return 0;
 }
