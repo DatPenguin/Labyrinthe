@@ -20,6 +20,8 @@ void affiche_tableau(int status) //affichage de la carte (tableau)
     print_status();
   if(DEBUG)
     printf("\n%sDEBUG: Vous etes en (%d,%d)%s\n", LIGHT_VERT, tab[0], tab[1], NORMAL);
+  else
+    putchar('\n');
 
   for (i  =  0; i  <  N; i++)
     {

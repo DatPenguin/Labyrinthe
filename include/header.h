@@ -21,7 +21,7 @@
  #define N 20
  #define M 20
 
- #define DEBUG 1
+ #define DEBUG 0
 
  #define FLEUR	"%s1 "
  #define ARBRE	"%s2 "
