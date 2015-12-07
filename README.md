@@ -15,3 +15,9 @@ An introduction screen will let you know what you could encounter on your journe
 
 Sei una croce in mezzo ad un labirinto.
 Uno schermo introduttivo ti presentera' i diversi oggetti che potrai incontrare sul tuo cammino. Riuscirai a trovare 10 monete o finirai inghiottito da un mostro? Buona fortuna !
+
+# лабіринт
+##Проект Н1 MIPI
+
+Лабіринт в тому числі контактний (хрест) рухливі.
+Введений екран представить вам різні речі ви можете знайти на вашому шляху, вдасться вас є 10 штук відновити уникаючи монстрів? Удачі!
