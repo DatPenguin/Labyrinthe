@@ -41,6 +41,9 @@ void affiche_tableau(int status) //affichage de la carte (tableau)
 	  case 4:
 	    printf(PIEGE, ROUGE);
 	    break;
+	  case 7:
+	    printf(FLEUR, LIGHT_VERT);
+	    break;
 	  case 9:
 	    printf(LOCK, VIOLET);
 	    break;

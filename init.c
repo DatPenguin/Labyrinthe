@@ -146,4 +146,5 @@ void def_tableau() //Definition du tableau representant la carte
   C[14][12] = 4;
   C[16][12] = 4;
   C[13][9] = 1;
+  C[6][13] = 7;
 }
